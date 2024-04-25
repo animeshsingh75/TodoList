@@ -5,13 +5,11 @@ export const DELETE_TASK = "DELETE_TASK";
 export const EDIT_TASK = "EDIT_TASK";
 export const TOGGLE_COMPLETE_TASK = "TOGGLE_COMPLETE_TASK";
 
-let nextTaskId = 0;
-
 export function addTask(taskDetails) {
   return {
     type: ADD_TASK,
     payload: {
-      id: nextTaskId++,
+      id: uuidv4(),
       ...taskDetails,
     },
   };
