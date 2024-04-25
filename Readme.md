@@ -1,23 +1,47 @@
-# Project Name
+# React Native Todo List
 
 This is a simple todo list app built with React Native.
 
-## Prerequisites
+## Getting Started
 
-Before you start, ensure you have the following installed:
+To get started with the app, follow these steps:
 
-- Node.js (LTS version)
-- npm or Yarn
-- Git (optional, if you plan to clone the repository)
-- Expo CLI
+1. Clone the repository:
 
-Install Expo CLI globally using npm:
-npm install -g expo-cli
+   ```bash
+   git clone https://github.com/animeshsingh75/TodoList
+   ```
 
-## Installation
+2. Navigate to the project directory:
 
-To install this project, follow these steps:
+   ```bash
+   cd react-native-todo-list
+   ```
 
-### Clone the repository (optional)
+3. Install the dependencies:
 
-If the project is hosted on a Git repository, clone it using:
+   ```bash
+   npm install
+   ```
+
+4. Start the Expo server:
+
+   ```bash
+   npx expo start
+   ```
+
+   This will start the Expo development server and open the Expo DevTools in your default browser.
+
+5. Use the Expo app to run the app on your device:
+
+   - Download the Expo app from the App Store or Google Play Store.
+   - Scan the QR code displayed in the Expo DevTools with your device's camera.
+   - The app will be loaded on your device.
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
