@@ -3,6 +3,7 @@ import {
   DELETE_TASK,
   EDIT_TASK,
   TOGGLE_COMPLETE_TASK,
+  FETCH_TASKS,
 } from "./actions";
 
 const initialState = {
@@ -11,6 +12,11 @@ const initialState = {
 
 function taskReducer(state = initialState, action) {
   switch (action.type) {
+    case FETCH_TASKS:
+      return {
+        ...state,
+        tasks: action.payload,
+      };
     case ADD_TASK:
       return {
         ...state,

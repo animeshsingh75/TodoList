@@ -17,8 +17,8 @@ export function getCategoryColor(category) {
   const colors = {
     Work: "blue",
     Shopping: "green",
-    Others: "red",
-    Personal: "yellow",
+    Others: "black",
+    Personal: "red",
   };
-  return colors[category] || "black"; // Returns 'black' if category doesn't match
+  return colors[category] || "black";
 }

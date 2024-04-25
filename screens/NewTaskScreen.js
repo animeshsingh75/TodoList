@@ -14,6 +14,8 @@ import { useDispatch } from "react-redux";
 import { Alert } from "react-native";
 import { addTask, editTask } from "../store/actions";
 import { truncateTime } from "../utils/Utils";
+import { Dropdown } from "react-native-element-dropdown";
+import DropDownPicker from "react-native-dropdown-picker";
 
 export default function TaskInputScreen({ route, navigation }) {
   const task = route.params?.task;
@@ -22,6 +24,14 @@ export default function TaskInputScreen({ route, navigation }) {
   const [dueDate, setDueDate] = useState(new Date(task?.dueDate || new Date()));
   const [category, setCategory] = useState(task?.category || "");
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState([
+    { label: "Work", value: "Work" },
+    { label: "Shopping", value: "Shopping" },
+    { label: "Personal", value: "Personal" },
+    { label: "Others", value: "Others" },
+  ]);
 
   const dispatch = useDispatch();
 
@@ -34,6 +44,11 @@ export default function TaskInputScreen({ route, navigation }) {
       Alert.alert("Error", "Description cannot be empty.");
       return;
     }
+
+    if (!category) {
+      Alert.alert("Error", "Category cannot be empty.");
+      return;
+    }
     const currentDate = truncateTime(new Date());
     const truncatedDueDate = truncateTime(dueDate);
     if (truncatedDueDate < currentDate) {
@@ -41,7 +56,6 @@ export default function TaskInputScreen({ route, navigation }) {
       return;
     }
     if (task) {
-      // Editing existing task
       dispatch(
         editTask({
           id: task.id,
@@ -79,26 +93,15 @@ export default function TaskInputScreen({ route, navigation }) {
           onChangeText={setName}
         />
         <TextInput
-          style={styles.input}
+          style={styles.inputDescription}
           placeholder="Description"
+          textAlignVertical="top"
           value={description}
           onChangeText={setDescription}
           multiline={true}
           numberOfLines={3}
         />
       </KeyboardAvoidingView>
-      <View style={styles.picker}>
-        <Picker
-          selectedValue={category}
-          onValueChange={(itemValue) => setCategory(itemValue)}
-          mode="dropdown"
-        >
-          <Picker.Item label="Work" value="Work" />
-          <Picker.Item label="Personal" value="Personal" />
-          <Picker.Item label="Shopping" value="Shopping" />
-          <Picker.Item label="Others" value="Others" />
-        </Picker>
-      </View>
       <TouchableOpacity
         onPress={() => setShowDatePicker(true)}
         style={styles.input}
@@ -116,12 +119,29 @@ export default function TaskInputScreen({ route, navigation }) {
           }}
         />
       )}
+      <View style={styles.picker}>
+        <DropDownPicker
+          style={styles.dropDown}
+          open={open}
+          value={category}
+          items={items}
+          setOpen={setOpen}
+          setValue={setCategory}
+          setItems={setItems}
+          placeholder={"Choose a category."}
+          dropDownContainerStyle={{
+            borderColor: "#C0C0C0",
+            borderWidth: 1,
+          }}
+        />
+      </View>
+
       <TouchableOpacity
         style={styles.submit}
         title="Add Task"
         onPress={handleAddTask}
       >
-        <Text style={styles.submitText}>Add Task</Text>
+        <Text style={styles.submitText}>{task ? "Edit Task" : "Add Task"}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -146,15 +166,28 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
   },
-  picker: {
-    height: 50,
+
+  inputDescription: {
+    paddingVertical: 15,
     paddingHorizontal: 15,
+    height: 100,
     backgroundColor: "#FFF",
     borderRadius: 20,
     marginHorizontal: 20,
     borderColor: "#C0C0C0",
     borderWidth: 1,
     marginBottom: 20,
+  },
+  dropDown: {
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    backgroundColor: "#FFF",
+    borderRadius: 20,
+    borderColor: "#C0C0C0",
+    borderWidth: 1,
+  },
+  picker: {
+    marginHorizontal: 20,
   },
   submit: {
     position: "absolute",

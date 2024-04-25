@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -6,11 +6,18 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Task from "../components/Task";
+import { fetchTasks } from "../store/actions";
 
 export default function MainScreen({ navigation }) {
-  const tasks = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
+
+  const tasks = useSelector((state) => state.tasks.tasks);
+
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>
